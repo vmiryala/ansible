@@ -1,0 +1,10 @@
+---
+- name: Main yml
+  hosts: webservers
+  tasks:
+  - name: Ping all hosts
+    command: uptime
+    register: out
+  - debug:
+      var: out
+      verbosity: 1 
