@@ -4,13 +4,23 @@
   become: true
   tasks:
 
+  - name: Print some debug information 
+    vars: 
+      msg: |
+        Ansible Distribution: {{ ansible_distribution }}
+        Ansible Dist version: {{ ansible_distribution_version }}
+    debug: 
+      msg: "{{ msg.split('\n') }}"       
+    tags: debug_info
+
   - name: update repository index
     apt: 
       update_cache: yes
-    when: ansible_distribution in [ "Debian GNU/Linux", "Ubuntu" ] 
+    when: ansible_distribution in [ "Debian", "Ubuntu" ] 
 
   - name: install apache2 package on Debian
     apt: 
       name: apache2
       state: latest
-    when: ansible_distribution == "Debian GNU/Linux"
+    when: ansible_distribution == "Debian"
+
