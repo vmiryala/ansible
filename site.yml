@@ -1,10 +1,16 @@
 ---
 - name: Main yml
-  hosts: webservers
+  hosts: all 
+  become: true
   tasks:
-  - name: Ping all hosts
-    command: uptime
-    register: out
-  - debug:
-      var: out
-      verbosity: 1 
+
+  - name: update repository index
+    apt: 
+      update_cache: yes
+    when: ansible_distribution in [ "Debian GNU/Linux", "Ubuntu" ] 
+
+  - name: install apache2 package on Debian
+    apt: 
+      name: apache2
+      state: latest
+    when: ansible_distribution == "Debian GNU/Linux"
