@@ -1,5 +1,5 @@
----
-- name: Main yml
+
+- name: site.yml
   hosts: all 
   become: true
   tasks:
@@ -20,7 +20,21 @@
 
   - name: install apache2 package on Debian
     apt: 
-      name: apache2
+      name: 
+        - apache2
+        - libapache2-mod-php 
       state: latest
     when: ansible_distribution == "Debian"
+
+  - name: install apache2 package on Centos
+    dnf: 
+      name: 
+        - httpd
+        - php 
+      state: latest
+    when: ansible_distribution == "CentOS"
+
+  - name: tell us which host we are on 
+    debug: 
+      var: inventory_hostname 
 
