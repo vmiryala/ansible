@@ -44,8 +44,4 @@ Vagrant.configure("2") do |config|
       #config.vm.synced_folder ".", "/vagrant", type: "nfs"
   end
 
-  # Install avahi on all machines  
-  config.vm.provision "shell", inline: <<-SHELL
-    apt-get install -y avahi-daemon libnss-mdns
-  SHELL
 end
