@@ -26,10 +26,12 @@
     debug: 
       msg: "{{ msg.split('\n') }}"       
     tags: debug_info
+    when: 0>1
 
   - name: tell us which host we are on 
     debug: 
       var: inventory_hostname 
+    when: 0>1
 
 - hosts: web_servers
   become: true
@@ -53,6 +55,15 @@
       state: latest
       update_cache: yes
     when: ansible_distribution == "CentOS"
+
+  - name: copy default html file for site
+    tags: apache, apache2, httpd
+    copy:
+      src: default_site.html
+      dest: /var/www/html/index.html
+      owner: root
+      group: root
+      mode: 0644
 
 - hosts: db_servers
   become: true
