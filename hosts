@@ -1,12 +1,11 @@
-node1
 node4
-node5
 
-[webservers]
+[web_servers]
 node1
 node2
-node5
 
-[dbservers]
-node2
+[db_servers]
 node3
+
+[file_servers]
+node5
