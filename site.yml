@@ -33,6 +33,22 @@
       var: inventory_hostname 
     when: 0>1
 
+- hosts: workstations
+  become: true
+  tasks:
+  
+  - name: install unzip
+    package:
+      name: unzip
+
+  - name: install terraform
+    unarchive: 
+      src: https://releases.hashicorp.com/terraform/0.12.28/terraform_0.12.28_linux_amf64.zip
+      dest: /usr/local/bin
+      mode: 0755
+      owner: root
+      group: root
+
 - hosts: web_servers
   become: true
   tasks:
@@ -55,6 +71,15 @@
       state: latest
       update_cache: yes
     when: ansible_distribution == "CentOS"
+
+  - name: start httpd (CentOS)
+    tags: apache, centos, httpd
+    service: 
+      name: httpd
+      state: started
+      enabled: true
+    when: ansible_distribution == "CentOS"
+
 
   - name: copy default html file for site
     tags: apache, apache2, httpd

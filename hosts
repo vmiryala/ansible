@@ -9,3 +9,6 @@ node3
 
 [file_servers]
 node5
+
+[workstations]
+node5
